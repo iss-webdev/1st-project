@@ -30,6 +30,21 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       display: flex;
       justify-content: space-between;
+      align-items: center;
+    }
+
+    .item-controls button {
+      margin-left: 5px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background: #6772e5;
+      color: white;
+    }
+
+    .item-controls button:hover {
+      background: #5469d4;
     }
 
     #cart-total {
@@ -39,11 +54,11 @@
       text-align: center;
     }
 
-    button {
+    .pay-btn {
       display: block;
       margin: 30px auto;
       padding: 12px 25px;
-      background-color: #6772e5;
+      background-color: #28a745;
       color: white;
       border: none;
       border-radius: 25px;
@@ -51,8 +66,8 @@
       cursor: pointer;
     }
 
-    button:hover {
-      background-color: #5469d4;
+    .pay-btn:hover {
+      background-color: #218838;
     }
   </style>
 </head>
@@ -62,39 +77,87 @@
   <ul id="cart-items"></ul>
   <h3 id="cart-total">Total: $0</h3>
 
-  <button onclick="checkout()">Pay with Stripe</button>
+  <button class="pay-btn" onclick="checkout()">Pay with Stripe</button>
 
   <script>
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartList = document.getElementById('cart-items');
-    const cartTotal = document.getElementById('cart-total');
-    let total = 0;
+    function getCart() {
+      return JSON.parse(localStorage.getItem("cart")) || [];
+    }
 
-    cart.forEach(item => {
-      const li = document.createElement('li');
-      li.innerHTML = `
-        <span>${item.name} (x${item.qty})</span>
-        <span>$${item.price * item.qty}</span>
-      `;
-      cartList.appendChild(li);
-      total += item.price * item.qty;
-    });
+    function saveCart(cart) {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
 
-    cartTotal.innerText = "Total: $" + total;
+    function addToCart(name, price) {
+      let cart = getCart();
+      const existing = cart.find(p => p.name === name);
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({ name, price, qty: 1 });
+      }
+      saveCart(cart);
+      renderCart();
+    }
+
+    function removeOne(name) {
+      let cart = getCart();
+      const item = cart.find(p => p.name === name);
+      if (item && item.qty > 1) {
+        item.qty--;
+      } else {
+        cart = cart.filter(p => p.name !== name);
+      }
+      saveCart(cart);
+      renderCart();
+    }
+
+    function removeAll(name) {
+      let cart = getCart();
+      cart = cart.filter(p => p.name !== name);
+      saveCart(cart);
+      renderCart();
+    }
+
+    function renderCart() {
+      const cart = getCart();
+      const cartList = document.getElementById('cart-items');
+      const cartTotal = document.getElementById('cart-total');
+      cartList.innerHTML = '';
+      let total = 0;
+
+      if (cart.length === 0) {
+        cartList.innerHTML = '<li>Cart is empty</li>';
+        cartTotal.innerText = 'Total: $0';
+        return;
+      }
+
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span>${item.name} (x${item.qty}) - $${item.price * item.qty}</span>
+          <span class="item-controls">
+            <button onclick="addToCart('${item.name}', ${item.price})">+</button>
+            <button onclick="removeOne('${item.name}')">-</button>
+            <button onclick="removeAll('${item.name}')">Remove</button>
+          </span>
+        `;
+        cartList.appendChild(li);
+        total += item.price * item.qty;
+      });
+
+      cartTotal.innerText = 'Total: $' + total;
+    }
 
     async function checkout() {
-      // Convert cart into Stripe line items
-      const lineItems = cart.map(item => ({
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: item.name,
-          },
-          unit_amount: item.price * 100,
-        },
-        quantity: item.qty,
-      }));
+      const cart = getCart();
+
+      // Send this `cart` data to your backend to create a Stripe checkout session
+      alert("To enable real payments, send cart to backend & create Stripe session.");
     }
+
+    // Initial render
+    renderCart();
   </script>
 
 </body>
