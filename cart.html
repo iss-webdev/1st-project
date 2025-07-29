@@ -69,6 +69,31 @@
     .pay-btn:hover {
       background-color: #218838;
     }
+
+    .contact input {
+      margin-left: 40px;
+      display: flex;
+      padding: 10px;
+      margin-top: 10px;
+      width: 500px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .contact h3 {
+      margin-top: 20px;
+      margin-left: 40px;
+    }
+
+    @media (max-width: 500px) {
+
+      ul{
+        width: 200px;
+      }
+      .contact input {
+        width: 200px;
+      }
+    }
   </style>
 </head>
 
@@ -76,10 +101,17 @@
   <h2>🛒 Your Cart</h2>
   <ul id="cart-items"></ul>
   <h3 id="cart-total">Total: $0</h3>
-
-  <form id="cart-form" action="https://formspree.io/f/xqalblpn" method="POST" onsubmit="prepareAndSubmit(event)">
-    <button class="pay-btn" type="submit">Submit</button>
-  </form>
+  <div class="contact">
+    <form id="cart-form" action="https://formspree.io/f/xnnzvord" method="POST" onsubmit="prepareAndSubmit(event)">
+      <h3>Name:</h3>
+      <input type="text" name="name" placeholder="eg: joe goldberg" required>
+      <h3>Email:</h3>
+      <input type="email" name="email" placeholder="joegoldberg@gmail.com" required>
+      <h3>Phone:</h3>
+      <input type="tel" name="phone" type="number" placeholder="613-121-5647" required>
+      <button class="pay-btn" type="submit">Submit</button>
+    </form>
+  </div>
 
   <script>
     function getCart() {
@@ -163,7 +195,7 @@
         return;
       }
 
-     
+
       cart.forEach((item, index) => {
         const input = document.createElement('input');
         input.type = 'hidden';
@@ -172,7 +204,7 @@
         form.appendChild(input);
       });
 
- 
+
       const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
       const totalInput = document.createElement('input');
       totalInput.type = 'hidden';
