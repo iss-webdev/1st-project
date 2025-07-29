@@ -13,15 +13,17 @@
 <body>
   <header>
 
-      <img class="logo" src="IMG_20250722_204713.jpg" alt="logo">
+    <img class="logo" src="IMG_20250722_204713.jpg" alt="logo">
     <nav>
-     
+
       <ul class="nav-menu">
-       
+
         <li><a class="left" href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
         <a href="#order"><button>ORDER NOW</button></a>
+        <button class="btn-1" onclick="window.location.href='cart.html'">🛒 View Cart</button>
+
       </ul>
 
       <div class="ham-menu">
@@ -86,7 +88,8 @@
             <img src="Cookies with chocolate chips on white background….jpg" alt="Cookie">
             <h2>Cookie</h2>
             <h2>$10</h2>
-            <button>Add to Cart</button>
+            <button onclick="addToCart('Cookie', 2.99)">Add to Cart</button>
+
           </div>
 
           <!-- Product 2: Milkshake -->
@@ -94,7 +97,8 @@
             <img src="Cookies with chocolate chips on white background….jpg" alt="Milkshake">
             <h2>Cookie with weed</h2>
             <h2>$35 <p>per batch</h2>
-            <button>Add to Cart</button>
+              <button onclick="addToCart('Cookie with chocolate', 35)">Add to Cart</button>
+
           </div>
 
           <!-- Product 3: Temples -->
@@ -102,14 +106,16 @@
             <img class="i-2" src="bb238e70-406e-4d6e-b1bb-13318536fec7.jpg" alt="sherly temples">
             <h2>Sherly Temples</h2>
             <h2>$5</h2>
-            <button class="btn">Add to Cart</button>
+            <button onclick="addToCart('Sherly Temples', 5)">Add to Cart</button>
+
           </div>
 
           <div class="product-card" id="i-1">
             <img class="img-2" src="Three milkshake flavors, one irresistible trio! 😍….jpg" alt="Milkshake">
             <h2>Milkshake</h2>
             <h2>$8</h2>
-            <button>Add to Cart</button>
+            <button onclick="addToCart('milkshake', 8)">Add to Cart</button>
+
           </div>
 
           <!-- Product 2: Milkshake -->
@@ -117,7 +123,8 @@
             <img class="img-2" src="If you’re looking to indulge in a decadent dessert….jpg" alt="Milkshake">
             <h2>Brownie</h2>
             <h2>$12</h2>
-            <button>Add to Cart</button>
+            <button onclick="addToCart('Brownie', 12)">Add to Cart</button>
+
           </div>
 
           <!-- Product 3: Temples -->
@@ -126,7 +133,8 @@
             <h2>brownies with weed</h2>
             <h2>$35 <p>per batch</p>
             </h2>
-            <button class="btn">Add to Cart</button>
+            <button onclick="addToCart('brownies with weed', 35)">Add to Cart</button>
+
           </div>
         </div>
   </section>
@@ -135,15 +143,16 @@
     <h1 class="contact-h">Contact</h1>
     <div class="contact-page">
       <div class="contact">
+        <form action="https://formspree.io/f/xqalblpn" method="POST">
+          <h3>Name:</h3>
+          <input type="text" name="name" placeholder="eg: joe goldberg" required>
+          <h3>Email:</h3>
+          <input type="email" name="email" placeholder="joegoldberg@gmail.com" required>
+          <h3>Phone:</h3>
+          <input type="tel" name="phone" placeholder="613-121-5647" required>
 
-        <h3>Name:</h3>
-        <input type="text" placeholder="eg: joe goldberg">
-        <h3>Email:</h3>
-        <input type="text" placeholder="joegoldberg@gmail.com">
-        <h3>Phone:</h3>
-        <input type="number" placeholder="613-121-5647">
-
-        <button class="btn-3">submit</button>
+          <button type="submit" class="btn-3">submit</button>
+        </form>
       </div>
 
       <div class="contact-photo">
